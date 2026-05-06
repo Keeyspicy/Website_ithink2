@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, CheckCircle } from "lucide-react";
 
@@ -24,7 +25,6 @@ export default function HeroSection({ onCtaClick }: HeroSectionProps) {
 
           {/* ── Left: Copy ──────────────────────────────────────────────────── */}
           <div>
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -58,7 +58,6 @@ export default function HeroSection({ onCtaClick }: HeroSectionProps) {
               can implement today to start climbing.
             </motion.p>
 
-            {/* Bullet list */}
             <motion.ul
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -79,10 +78,7 @@ export default function HeroSection({ onCtaClick }: HeroSectionProps) {
               transition={{ duration: 0.45, delay: 0.28 }}
               className="flex flex-col sm:flex-row gap-3"
             >
-              <button
-                onClick={onCtaClick}
-                className="btn-primary text-base px-8 py-4"
-              >
+              <button onClick={onCtaClick} className="btn-primary text-base px-8 py-4">
                 Get 3 FREE Tips
               </button>
               <a
@@ -104,65 +100,66 @@ export default function HeroSection({ onCtaClick }: HeroSectionProps) {
             </motion.p>
           </div>
 
-          {/* ── Right: Video placeholder ─────────────────────────────────────── */}
+          {/* ── Right: VSL thumbnail ─────────────────────────────────────────── */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           >
-            <div
-              className="relative w-full aspect-video rounded-2xl overflow-hidden cursor-pointer bg-[#EEF9EE] border border-[#D1FAE5]"
+            <a
+              href="#how-it-works"
+              className="block relative w-full aspect-video rounded-2xl overflow-hidden group border border-[#D1FAE5]"
               onMouseEnter={() => setVideoHovered(true)}
               onMouseLeave={() => setVideoHovered(false)}
-              onClick={onCtaClick}
               style={{
                 boxShadow: videoHovered
                   ? "0 20px 56px rgba(52,168,83,0.20), 0 4px 16px rgba(0,0,0,0.08)"
-                  : "0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
+                  : "0 8px 32px rgba(0,0,0,0.08)",
                 transition: "box-shadow 0.3s ease",
               }}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 select-none">
-                <p
-                  className="text-[#1C2B1C] font-black text-center px-6 leading-tight"
-                  style={{
-                    fontSize: "clamp(1.4rem, 4vw, 2rem)",
-                    transition: "transform 0.25s ease",
-                    transform: videoHovered ? "scale(1.03)" : "scale(1)",
-                  }}
-                >
-                  Click To Watch
-                </p>
+              {/* VSL cover image */}
+              <Image
+                src="/images/vsl-cover.jpg"
+                alt="Free training — click to watch"
+                fill
+                className="object-cover"
+                priority
+              />
 
-                {/* Play circle */}
-                <div
+              {/* Overlay */}
+              <span className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300" />
+
+              {/* Play button */}
+              <span className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                <span
                   style={{
                     width: 68, height: 68,
                     borderRadius: "50%",
-                    background: videoHovered ? "#34A853" : "#ffffff",
+                    background: videoHovered ? "#34A853" : "rgba(255,255,255,0.92)",
                     border: "2.5px solid #34A853",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     boxShadow: videoHovered
                       ? "0 0 0 10px rgba(52,168,83,0.15)"
-                      : "0 4px 16px rgba(52,168,83,0.22)",
+                      : "0 4px 16px rgba(0,0,0,0.28)",
                     transition: "all 0.25s ease",
                     transform: videoHovered ? "scale(1.1)" : "scale(1)",
                   }}
                 >
                   <Play
                     size={26}
-                    style={{ color: videoHovered ? "#fff" : "#34A853", marginLeft: 3 }}
                     fill={videoHovered ? "#fff" : "#34A853"}
+                    color={videoHovered ? "#fff" : "#34A853"}
+                    style={{ marginLeft: 3 }}
                   />
-                </div>
+                </span>
 
-                <div className="flex items-center gap-2 bg-white/80 border border-[#D1FAE5] rounded-full px-4 py-1.5">
+                <span className="flex items-center gap-2 bg-black/50 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5">
                   <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
-                  <span className="text-[#374151] text-xs font-medium">Free · ~10 min</span>
-                </div>
-              </div>
-              {/* TODO: Replace div with your video embed */}
-            </div>
+                  <span className="text-white text-xs font-medium">Free · ~10 min</span>
+                </span>
+              </span>
+            </a>
 
             <p className="text-center text-[#9CA3AF] text-xs mt-3">
               ↓ Sign up below to get 3 free tips you can use today

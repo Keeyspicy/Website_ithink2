@@ -120,6 +120,7 @@ export default function LeadCaptureSection({
       noValidate
     >
       <input type="hidden" name="_subject" value="New Lumax Lead" />
+      <input type="hidden" name="_cc"      value="kristens@lumaxresults.com" />
 
       <div>
         <input type="text" name="name" required placeholder="Your full name"
